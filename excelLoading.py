@@ -1,10 +1,10 @@
-#python ./excelLoading.py
+# python ./excelLoading.py
 import pandas
 import json
 import requests
 from datetime import datetime
 
-EXCEL = '/tmp/3dtiles/models.xlsx'
+EXCEL = './models.xlsx'
 URL = 'http://localhost:8082/models'
 HEADERS = { 'Content-Type': 'application/json' }
 
@@ -20,7 +20,6 @@ for row in excel_array:
   row.pop("modelPath")
   model["metadata"] = row
   print(model["metadata"])
-  model["metadata"]["links"] = json.loads(model["metadata"]["links"])
   response = requests.post(url = URL, json = model, headers = HEADERS)
   print(row["identifier"] + " -> " + str(response.status_code))
   if response.status_code > 201:
