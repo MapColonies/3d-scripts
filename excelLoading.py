@@ -17,7 +17,9 @@ excel_array = json.loads(excel_json)
 for row in excel_array:
   model = {}
   model["modelPath"] = row["modelPath"]
+  model["tilesetFilename"] = row["tilesetFilename"]
   row.pop("modelPath")
+  row.pop("tilesetFilename")
   model["metadata"] = row
   print(model["metadata"])
   response = requests.post(url = URL, json = model, headers = HEADERS)
