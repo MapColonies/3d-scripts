@@ -5,14 +5,16 @@ import json
 import requests
 from datetime import datetime
 import time
+import json
+
 
 EXCEL = './models.xlsx'
 URL = 'http://localhost:8082/models'
-URL_Model_Ingestion_Service = 'http://ingestion-stack-3d-model-ingestion-service-route-3d.apps.v0h0bdx6.eastus.aroapp.io/models'
-URL_JobService = 'http://ingestion-stack-discrete-ingestion-db-route-3d.apps.v0h0bdx6.eastus.aroapp.io/jobs'
+URL_Model_Ingestion_Service = 'http://ingestion-3d-model-ingestion-service-3d-dev.apps.v0h0bdx6.eastus.aroapp.io/models'
+URL_JobService = 'https://job-manager-job-qa-job-manager-route-raster.apps.v0h0bdx6.eastus.aroapp.io/jobs'
 HEADERS = {'Content-Type': 'application/json'}
 
-CSV = './models.csv'
+CSV = './models_update.csv'
 
 #excel_data = pandas.read_excel(EXCEL)
 excel_data = pandas.read_csv(CSV)
@@ -25,6 +27,7 @@ failed = "Failed"
 completed = "Completed"
 
 for row in excel_array:
+    # print(row)
     # if row["modelPath"] == "":
     #     break
     model = {}
@@ -32,17 +35,24 @@ for row in excel_array:
     model["tilesetFilename"] = row["tilesetFilename"]
     row.pop("modelPath")
     row.pop("tilesetFilename")
+    row["classification"] = str(row["classification"])
+    try:
+        row["footprint"] = json.loads(row["footprint"])
+    except:
+        row["footprint"] = row["footprint"]
     model["metadata"] = row
-    # print(model["metadata"])
     response_Model_Ingestion = requests.post(
         url=URL_Model_Ingestion_Service, json=model, headers=HEADERS)
-    print(row["identifier"] + " -> " +
-          str(response_Model_Ingestion.status_code))
+    # print(row["identifier"] + " -> " +
+    #       str(response_Model_Ingestion.status_code))
     if response_Model_Ingestion.status_code > 201:
-        print(response_Model_Ingestion.json()["message"] + "\n")
         model["message"] = response_Model_Ingestion.json()["message"]
+        list_fails.append([row["description"], model["message"]])
+        # print("AAAAAAAAAAAAAAAA")
     else:
+        # print("ENTERRRRRRRRRRRRRRRRR")
         model["message"] = "Problem with Nifi. Maybe wrong model path?"
+        # print("RESPONSEEEEEEEEEEEEEEE1111111" + response_Job)
         url_with_jobId = URL_JobService + "/" + \
             response_Model_Ingestion.json()["jobId"]
         response_Job = requests.get(url=url_with_jobId)
@@ -50,11 +60,11 @@ for row in excel_array:
             time.sleep(5)
             # print("Sleeped")
             response_Job = requests.get(url=url_with_jobId)
-        print(url_with_jobId)
-        print("\n")
-    if response_Job.json()["status"] == failed:
-        list_fails.append([row["identifier"], model["message"]])
+        if response_Job.json()["status"] == failed:
+            list_fails.append([row["description"], model["message"]])
+
     num_of_models = num_of_models + 1
+    # break
 
 # Report part
 print("Finished!\nNumbers of models: " + str(num_of_models) +
