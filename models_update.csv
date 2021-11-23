@@ -1,5 +1,5 @@
-modelPath,tilesetFilename,productId,productName,productType,description,creationDate,sourceDateStart,sourceDateEnd,minResolutionMeter,maxResolutionMeter,nominalResolution,producerName,maxAccuracyCE90,absoluteAccuracyLEP90,classification,accuracySE90,relativeAccuracyLEP90,visualAccuracy,sensors,footprint,heightRangeFrom,heightRangeTo,srsId,srsName,srsOrigin,region,productionSystem,productionSystemVer,productionMethod,minFlightAlt,maxFlightAlt,geographicArea
-/home/libotadmin/NewYork,tileset.json,null,impactful,3DPhotoRealistic,Fantastic,2021-04-26T07:09:20.560Z,2021-04-26T07:09:20.560Z,2021-04-26T07:09:20.560Z,1.1,1,1.1,IDFMU,1.2,1.5,2,2,2,12,Avon,"{
+modelPath,tilesetFilename,productId,productName,productType,description,creationDate,sourceDateStart,sourceDateEnd,minResolutionMeter,maxResolutionMeter,nominalResolution,producerName,maxAccuracyCE90,absoluteAccuracyLEP90,classification,accuracySE90,relativeAccuracyLEP90,visualAccuracy,sensors,footprint,heightRangeFrom,heightRangeTo,srsId,srsName,srsOrigin,region,productionSystem,productionSystemVer,productionMethod,minFlightAlt,maxFlightAlt,geographicArea,
+/home/libotadmin/NewYork,tileset.json,,impactful,3DPhotoRealistic,,2021-04-26T07:09:20.560Z,2021-04-26T07:09:20.560Z,2021-04-26T07:09:20.560Z,-,-,-,IDFMU,999,999,4,-,-,-,Avon,"{
       ""type"": ""Polygon"",
       ""coordinates"": [
         [
@@ -25,10 +25,10 @@ modelPath,tilesetFilename,productId,productName,productType,description,creation
           ]
         ]
       ]
-    }",2,2,4326,redundant,(30;40;50),infrastructure,driver,Computers,directional,2,21,dsds
-/home/libotadmin/NewYork,tileset.json,null,Pre-emptive,3DPhotoRealistic,Cordoba,2021-04-26T07:09:20.560Z,2021-04-26T07:09:20.560Z,2021-04-26T07:09:20.560Z,1.1,1.1,1.1,IDFMU,1.2,1.5,4,1,1,1,Baby,Cotton,1,1,4326,Generic,(30;40;50),Guam,iterate,cyan,deposit,3,1,dss
-/home/libotadmin/NewYork,tileset.json,null,Account,3DPhotoRealistic,fuchsia,2021-04-26T07:09:20.560Z,2021-04-26T07:09:20.560Z,2021-04-26T07:09:20.560Z,1.1,1,1.1,IDFMU,1.2,1.6,1,3,3,3,wireless,Kwacha,3,3,4326,Grocery,(30;40;50),neural,Account,alarm,navigating,1,2,dsds
-/home/libotadmin/NewYork,tileset.json,null,Account,3DPhotoRealistic,fuchsia,2021-04-26T07:09:20.560Z,2021-04-26T07:09:20.560Z,2021-04-26T07:09:20.560Z,1.1,1,1.1,IDFMU,1.2,1.8,1,4,4,2,wireless,"{
+    }",-,-,4326,redundant,(30;40;50),fd,fds,7.6,driver,-,-,sss,
+/home/libotadmin/NewYork,tileset.json,,Pre-emptive,3DPhotoRealistic,Cordoba,2021-04-26T07:09:20.560Z,2021-04-26T07:09:20.560Z,2021-04-26T07:09:20.560Z,1.1,1.1,1.1,IDFMU,1.2,1.5,4,1,1,1,Baby,Cotton,1,1,4326,Generic,(30;40;50),40,50),Guam,iterate,cyan,deposit,3,1
+/home/libotadmin/NewYork,tileset.json,,Account,3DPhotoRealistic,fuchsia,2021-04-26T07:09:20.560Z,2021-04-26T07:09:20.560Z,2021-04-26T07:09:20.560Z,1.1,1,1.1,IDFMU,1.2,1.6,1,3,3,3,wireless,Kwacha,3,3,4326,Grocery,(30;40;50),40,50),neural,Account,alarm,navigating,1,2
+/home/libotadmin/NewYork,tileset.json,,Account,3DPhotoRealistic,fuchsia,2021-04-26T07:09:20.560Z,2021-04-26T07:09:20.560Z,2021-04-26T07:09:20.560Z,1.1,1,1.1,IDFMU,1.2,1.8,1,4,4,2,wireless,"{
       ""type"": ""Polygon"",
       ""coordinates"": [
         [
@@ -54,4 +54,4 @@ modelPath,tilesetFilename,productId,productName,productType,description,creation
           ]
         ]
       ]
-    }",4,4,4326,Grocery,(30;40;50),neural,Account,alarm,navigating,2,2,dsss
+    }",4,4,4326,Grocery,(30;40;50),40,50),neural,Account,alarm,navigating,2,2

@@ -11,7 +11,7 @@ import json
 EXCEL = './models.xlsx'
 URL = 'http://localhost:8082/models'
 URL_Model_Ingestion_Service = 'http://ingestion-3d-model-ingestion-service-3d-dev.apps.v0h0bdx6.eastus.aroapp.io/models'
-URL_JobService = 'https://job-manager-job-qa-job-manager-route-raster.apps.v0h0bdx6.eastus.aroapp.io/jobs'
+URL_JobService = 'https://job-manager-dev-job-manager-route-raster-dev.apps.v0h0bdx6.eastus.aroapp.io/jobs'
 HEADERS = {'Content-Type': 'application/json'}
 
 CSV = './models_update.csv'
@@ -21,50 +21,66 @@ excel_data = pandas.read_csv(CSV)
 excel_json = excel_data.to_json(orient='records')
 excel_array = json.loads(excel_json)
 num_of_models = 0
+index = 1
 list_fails = []
 in_progress = "In-Progress"
 failed = "Failed"
 completed = "Completed"
+list_nulls = []
+
+
+def classification(x):
+    if x == "a":
+        return 1
+    if x == "b":
+        return 2
+
 
 for row in excel_array:
-    # print(row)
-    # if row["modelPath"] == "":
-    #     break
+
     model = {}
     model["modelPath"] = row["modelPath"]
     model["tilesetFilename"] = row["tilesetFilename"]
     row.pop("modelPath")
     row.pop("tilesetFilename")
-    row["classification"] = str(row["classification"])
+    for p in row:
+        if row[p]:
+            if row[p] == '-':
+                list_nulls.insert(0, p)
+        else:
+            list_nulls.insert(0, p)
     try:
         row["footprint"] = json.loads(row["footprint"])
     except:
         row["footprint"] = row["footprint"]
+    for l in list_nulls:
+        row.pop(l)
+
+    row["classification"] = str(row["classification"])
+
     model["metadata"] = row
+
     response_Model_Ingestion = requests.post(
         url=URL_Model_Ingestion_Service, json=model, headers=HEADERS)
-    # print(row["identifier"] + " -> " +
-    #       str(response_Model_Ingestion.status_code))
+
     if response_Model_Ingestion.status_code > 201:
         model["message"] = response_Model_Ingestion.json()["message"]
-        list_fails.append([row["description"], model["message"]])
-        # print("AAAAAAAAAAAAAAAA")
+        list_fails.append([str(index), model["message"]])
     else:
-        # print("ENTERRRRRRRRRRRRRRRRR")
         model["message"] = "Problem with Nifi. Maybe wrong model path?"
-        # print("RESPONSEEEEEEEEEEEEEEE1111111" + response_Job)
+
         url_with_jobId = URL_JobService + "/" + \
             response_Model_Ingestion.json()["jobId"]
         response_Job = requests.get(url=url_with_jobId)
         while response_Job.json()["status"] == in_progress:
             time.sleep(5)
-            # print("Sleeped")
             response_Job = requests.get(url=url_with_jobId)
         if response_Job.json()["status"] == failed:
-            list_fails.append([row["description"], model["message"]])
+            list_fails.append([str(index), model["message"]])
 
     num_of_models = num_of_models + 1
-    # break
+    index = index + 1
+    break
 
 # Report part
 print("Finished!\nNumbers of models: " + str(num_of_models) +
