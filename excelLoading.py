@@ -11,7 +11,7 @@ import json
 EXCEL = './models.xlsx'
 URL = 'http://localhost:8082/models'
 URL_Model_Ingestion_Service = 'http://ingestion-3d-model-ingestion-service-3d-dev.apps.v0h0bdx6.eastus.aroapp.io/models'
-URL_JobService = 'https://job-manager-dev-job-manager-route-raster-dev.apps.v0h0bdx6.eastus.aroapp.io/jobs'
+URL_JobService = 'https://job-manager-3d-dev-dev-job-manager-route-3d-dev.apps.v0h0bdx6.eastus.aroapp.io/jobs'
 HEADERS = {'Content-Type': 'application/json'}
 
 CSV = './models_update.csv'
